@@ -1,0 +1,7 @@
+- service: modules
+  command: env
+- service: modules
+  command: sh -c "cd /modules;npm test"
+- service: modules
+  command: sh -c "cd /modules && npm publish ."
+  tag: master

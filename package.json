@@ -1,0 +1,35 @@
+{
+  "name": "atomic-scheduler",
+  "version": "0.1.0",
+  "description": "Atomic scheduler",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && NODE_ENV=test mocha --recursive --reporter spec --bail"
+  },
+  "author": "Gergo Barcza",
+  "license": "ISC",
+  "dependencies": {
+    "async-base-class": "^1.0.0",
+    "bluebird": "^3.3.4",
+    "co": "^4.6.0",
+    "moment": "^2.12.0",
+    "redis": "^2.5.2",
+    "redis-clustr": "^1.4.2",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "co-mocha": "^1.1.2",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "standard": "^6.0.8"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com:ghostmonitor/atomic-scheduler.git"
+  }
+}
