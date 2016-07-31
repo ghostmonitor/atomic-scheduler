@@ -39,10 +39,12 @@ class Scheduler extends events.EventEmitter {
 
   _setEventListener () {
     this.redisListener.on('message', (channel, key) => {
-      key = key.replace(this.prefixes.key, '')
-      this.handleExpire(key)
+      var cleanedKey = key.replace(this.prefixes.key, '')
+      // we only handle key expires the others we should ignore
+      if (key === cleanedKey) return
+      this.handleExpire(cleanedKey)
       .catch((err) => {
-        var msg = `Scheduler error occured while running handler for key ${key}: ${err.message}`
+        var msg = `Scheduler error occured while running handler for key ${cleanedKey}: ${err.message}`
         err.message = msg
         this.emit('error', err)
       })
