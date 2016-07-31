@@ -5,6 +5,7 @@ modules:
   links:
      - redis
 redis:
-   image: redis:3-alpine
-   volumes: 
-    - ./docker/redis.conf:/usr/local/etc/redis/redis.conf
+  build:
+    dockerfile_path: Dockerfile.redis
+    cache: true
+

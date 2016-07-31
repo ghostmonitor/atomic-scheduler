@@ -1,8 +1,6 @@
-FROM alpine:3.2
+FROM alpine:3.4
 MAINTAINER David Papp <david@ghostmonitor.com>
 
-RUN echo 'http://ghostbar.github.io/alpine-alt-nodejs/v3.2/pkgs/v3.2' >> /etc/apk/repositories
-RUN apk --update --allow-untrusted add nodejs && apk add --update git curl bash build-base libc-dev python
+RUN apk add --update nodejs git curl bash build-base libc-dev python
 COPY . /modules
-# ADD docker/npmrc /root/.npmrc
 RUN cd modules && npm install
