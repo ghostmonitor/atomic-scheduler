@@ -60,7 +60,8 @@ class Scheduler extends events.EventEmitter {
     this.handlers[data.handler](JSON.parse(data.data))
 
     // Clean it up
-    yield this.redisPublisher.delAsync(`${this.prefixes.lock}${key}`)
+    // We do this because some listeneres might get the event later
+    yield this.redisPublisher.expireAsync(`${this.prefixes.lock}${key}`, 60)
     yield this.redisPublisher.delAsync(`${this.prefixes.data}${key}`)
   }
   /**
@@ -93,7 +94,7 @@ class Scheduler extends events.EventEmitter {
     }
     hmsetData = _(hmsetData).chain().pairs().flatten().value()
     yield this.redisPublisher.hmsetAsync(hmsetKeyName, hmsetData)
-    return expireAt
+    return moment.unix(expireAt).toDate()
   }
 
   /**
