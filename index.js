@@ -39,10 +39,12 @@ class Scheduler extends events.EventEmitter {
 
   _setEventListener () {
     this.redisListener.on('message', (channel, key) => {
-      key = key.replace(this.prefixes.key, '')
-      this.handleExpire(key)
+      var cleanedKey = key.replace(this.prefixes.key, '')
+      // we only handle key expires the others we should ignore
+      if (key === cleanedKey) return
+      this.handleExpire(cleanedKey)
       .catch((err) => {
-        var msg = `Scheduler error occured while running handler for key ${key}: ${err.message}`
+        var msg = `Scheduler error occured while running handler for key ${cleanedKey}: ${err.message}`
         err.message = msg
         this.emit('error', err)
       })
@@ -60,7 +62,8 @@ class Scheduler extends events.EventEmitter {
     this.handlers[data.handler](JSON.parse(data.data))
 
     // Clean it up
-    yield this.redisPublisher.delAsync(`${this.prefixes.lock}${key}`)
+    // We do this because some listeneres might get the event later
+    yield this.redisPublisher.expireAsync(`${this.prefixes.lock}${key}`, 60)
     yield this.redisPublisher.delAsync(`${this.prefixes.data}${key}`)
   }
   /**
@@ -93,7 +96,7 @@ class Scheduler extends events.EventEmitter {
     }
     hmsetData = _(hmsetData).chain().pairs().flatten().value()
     yield this.redisPublisher.hmsetAsync(hmsetKeyName, hmsetData)
-    return expireAt
+    return moment.unix(expireAt).toDate()
   }
 
   /**
