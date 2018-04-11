@@ -18,12 +18,12 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-as-promised": "^5.2.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "co-mocha": "^1.1.2",
-    "mocha": "^2.4.5",
-    "sinon": "^1.17.3",
-    "standard": "^6.0.8"
+    "mocha": "^5.0.5",
+    "sinon": "^4.5.0",
+    "standard": "^11.0.1"
   },
   "directories": {
     "test": "test"
