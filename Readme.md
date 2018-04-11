@@ -1,4 +1,6 @@
 # Atomic scheduler
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/ghostmonitor/atomic-scheduler.svg)](https://greenkeeper.io/)
 Schedule lib for folks who takes it seriously :)
 
 ## Requirements
